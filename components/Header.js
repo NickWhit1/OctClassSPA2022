@@ -5,4 +5,3 @@ export default state => html`
     <h1>${state.header}</h1>
   </header>
 `;
-
