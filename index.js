@@ -16,14 +16,15 @@ function render(state = store.Home) {
   ${Main(state)}
   ${Footer()}
   `;
+  afterRender();
   router.updatePageLinks();
 }
-
-// add menu toggle to bars icon in nav bar
-// document.querySelector(".fa-bars").addEventListener("click", () => {
-//   document.querySelector("nav > ul").classList.toggle("hidden--mobile");
-// });
-
+function afterRender() {
+  // add menu toggle to bars icon in nav bar
+  document.querySelector(".fa-bars").addEventListener("click", () => {
+    document.querySelector("nav > ul").classList.toggle("hidden--mobile");
+  });
+}
 router.hooks({
   before: (done, params) => {
     const view =
@@ -52,6 +53,18 @@ router.hooks({
             done();
           })
           .catch(err => console.log(err));
+        break;
+      case "Pizza":
+        axios
+          .get(`${process.env.PIZZA_PLACE_API_URL}/pizzas`)
+          .then(response => {
+            store.Pizza.pizzas = response.data;
+            done();
+          })
+          .catch(error => {
+            console.log("It puked", error);
+            done();
+          });
         break;
       default:
         done();
