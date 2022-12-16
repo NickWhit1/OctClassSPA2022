@@ -59,6 +59,7 @@ router.hooks({
           .get(`${process.env.PIZZA_PLACE_API_URL}/pizzas`)
           .then(response => {
             store.Pizza.pizzas = response.data;
+            console.log(response.data);
             done();
           })
           .catch(error => {
